@@ -14,11 +14,12 @@
     <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="base_controller.js"></script>
+    <script type="text/javascript" src="head_controller.js"></script>
     <script type="text/javascript" src="touch_interface.js"></script>
     
     <script type="text/javascript">
       $(document).ready(function() {
-        Pr2TeleopApp.init(BaseController, TouchInterface);
+        Pr2TeleopApp.init(BaseController, HeadController, TouchInterface);
       });
     </script>
     <style>

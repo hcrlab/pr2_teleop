@@ -26,7 +26,7 @@ var Pr2TeleopApp = (function() {
   }
 
   // Initializes the teleop app.
-  function init(base_controller, touch_interface) {
+  function init(base_controller, head_controller, touch_interface) {
     $.get('/get_websocket_url', function(websocket_url) {
       _ros = new ROSLIB.Ros({
         url: websocket_url
@@ -47,6 +47,7 @@ var Pr2TeleopApp = (function() {
       $(window).resize(_updateHeadImage);
       
       base_controller.init(_ros, '/base_controller/command');
+      head_controller.init(_ros, '/head_traj_controller/point_head_action');
       touch_interface.init();
 
       touch_interface.setMoveForward(base_controller.moveForward);
@@ -55,6 +56,10 @@ var Pr2TeleopApp = (function() {
       touch_interface.setMoveRight(base_controller.moveRight);
       touch_interface.setRotateClockwise(base_controller.rotateClockwise);
       touch_interface.setRotateCounterClockwise(base_controller.rotateCounterClockwise);
+      touch_interface.setHeadUp(head_controller.lookUp);
+      touch_interface.setHeadDown(head_controller.lookDown);
+      touch_interface.setHeadLeft(head_controller.lookLeft);
+      touch_interface.setHeadRight(head_controller.lookRight);
     });
   }
 

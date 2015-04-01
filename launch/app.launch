@@ -1,5 +1,5 @@
 <launch>
   <group ns="pr2_teleop">
-	<node pkg="mjpeg_server" type="mjpeg_server" name="mjpeg_server" />
+	  <node pkg="web_video_server" type="web_video_server" name="web_video_server" />
   </group>
 </launch>

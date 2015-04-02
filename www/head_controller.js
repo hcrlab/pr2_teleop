@@ -53,8 +53,8 @@ var HeadController = (function() {
 
   function lookDown() {
     _point_vert_angle -= (Math.PI / 36);
-    if (_point_vert_angle < -Math.PI / 3) {
-      _point_vert_angle = -Math.PI / 3;
+    if (_point_vert_angle < -Math.PI / 2) {
+      _point_vert_angle = -Math.PI / 2;
     }
     sendGoal(_point_hor_angle, _point_vert_angle);
   }

@@ -60,6 +60,7 @@ var Pr2TeleopApp = (function() {
       
       base_controller.init(_ros, '/base_controller/command');
       head_controller.init(_ros, '/head_traj_controller/point_head_action');
+      head_controller.sendGoal(0, 0);
       tuck_arms_controller.init(_ros, '/tuck_arms');
       touch_interface.init();
 

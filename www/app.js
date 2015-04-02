@@ -25,6 +25,18 @@ var Pr2TeleopApp = (function() {
     }
   }
 
+  // Populates the src value of the head image once it's available.
+  var _head_image_timer;
+  function _waitForHeadImage() {
+    var headimage = $('#headimage');
+    headimage.attr('src', _streamUrl('/wide_stereo/right/image_rect_color'));
+    if (headimage.height() === 0) {
+      _head_image_timer = setTimeout(_waitForHeadImage, 1000);
+    } else {
+      clearTimeout(_head_image_timer);
+    }
+  }
+
   // Initializes the teleop app.
   function init(base_controller, head_controller, tuck_arms_controller, touch_interface) {
     $.get('/get_websocket_url', function(websocket_url) {
@@ -42,7 +54,7 @@ var Pr2TeleopApp = (function() {
       });
 
       var headimage = $('#headimage');
-      headimage.attr('src', _streamUrl('/wide_stereo/right/image_rect_color'));
+      _waitForHeadImage();
       _updateHeadImage();
       $(window).resize(_updateHeadImage);
       

@@ -31,6 +31,7 @@ var Pr2TeleopApp = (function() {
     var headimage = $('#headimage');
     headimage.attr('src', _streamUrl('/wide_stereo/right/image_rect_color'));
     if (headimage.height() === 0) {
+      // Must wait for ~1s at least for some reason.
       _head_image_timer = setTimeout(_waitForHeadImage, 1000);
     } else {
       clearTimeout(_head_image_timer);

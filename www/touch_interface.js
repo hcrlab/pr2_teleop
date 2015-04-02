@@ -86,13 +86,13 @@ var TouchInterface = (function() {
       button.data('pressed', false);
     });
     _applyAll(function(button) {
-      button.mousedown(function() {
+      button.bind('touchstart mousedown', function() {
         button.addClass('pressed');
         _timer = setInterval(function() {
           _handleButtonPress(button);
         }, _interval);
       });
-      button.mouseup(function() {
+      button.bind('touchend mouseup', function() {
         button.removeClass('pressed');
       });
     });

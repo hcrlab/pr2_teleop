@@ -42,7 +42,7 @@ var Pr2TeleopApp = (function() {
       });
 
       var headimage = $('#headimage');
-      headimage.attr('src', _streamUrl('/head_mount_kinect/rgb/image_raw'));
+      headimage.attr('src', _streamUrl('/wide_stereo/right/image_rect_color'));
       _updateHeadImage();
       $(window).resize(_updateHeadImage);
       

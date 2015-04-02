@@ -45,7 +45,7 @@ var TouchInterface = (function() {
   var _head_right_button;
   var _tuck_arms_button;
   var _timer;
-  var _interval = 100;
+  var _interval = 50;
 
   function _applyAll(f) {
     f(_base_forward_button);

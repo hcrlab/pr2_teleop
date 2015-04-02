@@ -53,7 +53,6 @@ var Pr2TeleopApp = (function() {
         console.log('Connection to websocket server closed.');
       });
 
-      var headimage = $('#headimage');
       _waitForHeadImage();
       _updateHeadImage();
       $(window).resize(_updateHeadImage);

@@ -45,7 +45,7 @@ var TouchInterface = (function() {
   var _head_right_button;
   var _tuck_arms_button;
   var _timer;
-  var _interval = 50; // Send cmd_vel commands every 50 ms.
+  var _interval = 100;
 
   function _applyAll(f) {
     f(_base_forward_button);
@@ -88,11 +88,15 @@ var TouchInterface = (function() {
     _applyAll(function(button) {
       button.bind('touchstart mousedown', function() {
         button.addClass('pressed');
+        // In case the timer is not cleared before reassigning,
+        // clear before reassignment, otherwise it could infinite loop.
+        clearInterval(_timer);
         _timer = setInterval(function() {
           _handleButtonPress(button);
         }, _interval);
       });
       button.bind('touchend mouseup', function() {
+        clearInterval(_timer);
         button.removeClass('pressed');
       });
     });

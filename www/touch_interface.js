@@ -29,6 +29,9 @@ var TouchInterface = (function() {
   function setHeadRight(f) {
     _head_right_button.data('callback', f);
   }
+  function setTuckArms(f) {
+    _tuck_arms_button.data('callback', f);
+  }
 
   var _base_forward_button;
   var _base_backward_button;
@@ -40,6 +43,7 @@ var TouchInterface = (function() {
   var _head_down_button;
   var _head_left_button;
   var _head_right_button;
+  var _tuck_arms_button;
   var _timer;
   var _interval = 50; // Send cmd_vel commands every 50 ms.
 
@@ -54,6 +58,7 @@ var TouchInterface = (function() {
     f(_head_down_button);
     f(_head_left_button);
     f(_head_right_button);
+    f(_tuck_arms_button);
   }
 
   function _handleButtonPress(button) {
@@ -75,6 +80,7 @@ var TouchInterface = (function() {
     _head_down_button = $('#head_down');
     _head_left_button = $('#head_left');
     _head_right_button = $('#head_right');
+    _tuck_arms_button = $('#tuck_arms');
 
     _applyAll(function(button) {
       button.data('pressed', false);
@@ -104,5 +110,6 @@ var TouchInterface = (function() {
     setHeadDown: setHeadDown,
     setHeadLeft: setHeadLeft,
     setHeadRight: setHeadRight,
+    setTuckArms: setTuckArms,
   };
 })();

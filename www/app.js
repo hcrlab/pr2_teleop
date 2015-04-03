@@ -25,8 +25,21 @@ var Pr2TeleopApp = (function() {
     }
   }
 
+  // Populates the src value of the head image once it's available.
+  var _head_image_timer;
+  function _waitForHeadImage() {
+    var headimage = $('#headimage');
+    headimage.attr('src', _streamUrl('/wide_stereo/right/image_rect_color'));
+    if (headimage.height() === 0) {
+      // Must wait for ~1s at least for some reason.
+      _head_image_timer = setTimeout(_waitForHeadImage, 1000);
+    } else {
+      clearTimeout(_head_image_timer);
+    }
+  }
+
   // Initializes the teleop app.
-  function init(base_controller, head_controller, touch_interface) {
+  function init(base_controller, head_controller, tuck_arms_controller, touch_interface) {
     $.get('/get_websocket_url', function(websocket_url) {
       _ros = new ROSLIB.Ros({
         url: websocket_url
@@ -41,13 +54,14 @@ var Pr2TeleopApp = (function() {
         console.log('Connection to websocket server closed.');
       });
 
-      var headimage = $('#headimage');
-      headimage.attr('src', _streamUrl('/wide_stereo/right/image_rect_color'));
+      _waitForHeadImage();
       _updateHeadImage();
       $(window).resize(_updateHeadImage);
       
       base_controller.init(_ros, '/base_controller/command');
       head_controller.init(_ros, '/head_traj_controller/point_head_action');
+      head_controller.sendGoal(0, 0);
+      tuck_arms_controller.init(_ros, '/tuck_arms');
       touch_interface.init();
 
       touch_interface.setMoveForward(base_controller.moveForward);
@@ -60,6 +74,10 @@ var Pr2TeleopApp = (function() {
       touch_interface.setHeadDown(head_controller.lookDown);
       touch_interface.setHeadLeft(head_controller.lookLeft);
       touch_interface.setHeadRight(head_controller.lookRight);
+
+      touch_interface.setTuckArms(function() {
+        tuck_arms_controller.tuckArms(true, true);
+      });
     });
   }
 

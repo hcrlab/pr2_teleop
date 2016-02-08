@@ -1,7 +1,7 @@
 var BaseController = (function() {
   var _ros;
-  var _linear_speed = 0.5; // meters / second
-  var _angular_speed = 0.75; // radians / second
+  var _linear_speed = 0.125; // meters / second
+  var _angular_speed = 0.125; // radians / second
   var _cmd_vel;
 
   function init(ros, base_topic) {

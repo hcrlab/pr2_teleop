@@ -43,7 +43,7 @@ var Pr2TeleopApp = (function() {
     var websocketUrl = (function() {
       var hostname = window.location.hostname;
       var protocol = 'ws:';
-    
+      if (window.location.protocol == 'https:') {
         protocol = 'wss:'
       }
       return protocol + '//' + hostname + ':9090';

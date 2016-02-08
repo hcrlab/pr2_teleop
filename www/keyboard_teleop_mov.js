@@ -32,7 +32,7 @@ KEYBOARDTELEOP.Teleop = function(options) {
   var x = 0;
   var y = 0;
   var z = 0;
-o
+
   var point_x = 10;
   var point_y = 0;
   var point_z = 0;

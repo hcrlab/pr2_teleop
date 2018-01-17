@@ -1,5 +1,2 @@
 <launch>
-  <group ns="pr2_web_teleop">
-	  <node pkg="web_video_server" type="web_video_server" name="web_video_server" />
-  </group>
 </launch>

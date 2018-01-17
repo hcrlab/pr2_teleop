@@ -3,39 +3,7 @@ var Pr2TeleopApp = (function() {
 
   // Given the name of a topic, returns the stream URL for web_video_server.
   function _streamUrl(topic) {
-    var l = new URL(window.location.href);
-    l.port = 8080;
-    l.pathname = "stream";
-    l.search= "topic=" + topic;
-    return l.href;
-  }
-
-  function _updateHeadImage() {
-    var headimage = $('#headimage');
-
-    // Scale the image to fit inside the document at a 4:3 aspect ratio.
-    var docwidth = $(window).width();
-    var docheight = $(window).height();
-    if (docwidth / docheight > 4/3) {
-      headimage.attr('height', (docheight-5));
-      headimage.attr('width', (docheight-5) * 4/3);
-    } else {
-      headimage.attr('height', (docwidth-5) * 3/4);
-      headimage.attr('width', (docwidth-5));
-    }
-  }
-
-  // Populates the src value of the head image once it's available.
-  var _head_image_timer;
-  function _waitForHeadImage() {
-    var headimage = $('#headimage');
-    headimage.attr('src', _streamUrl('/wide_stereo/right/image_rect_color'));
-    if (headimage.height() === 0) {
-      // Must wait for ~1s at least for some reason.
-      _head_image_timer = setTimeout(_waitForHeadImage, 1000);
-    } else {
-      clearTimeout(_head_image_timer);
-    }
+    return window.location.protocol + '//' + window.location.hostname + ':9998/streams/' + topic + '.webm?enc=webm&bitrate=250000&framerate=15';
   }
 
   // Initializes the teleop app.
@@ -61,9 +29,8 @@ var Pr2TeleopApp = (function() {
       console.log('Connection to websocket server closed.');
     });
 
-    _waitForHeadImage();
-    _updateHeadImage();
-    $(window).resize(_updateHeadImage);
+    var headimage = $('#headimage');
+    headimage.attr('src', _streamUrl('head_mount_kinect/rgb/image_rect_color'));
     
     base_controller.init(_ros, '/base_controller/command');
     head_controller.init(_ros, '/head_traj_controller/point_head_action');
